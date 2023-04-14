@@ -1,10 +1,11 @@
 import style from "./homePage.module.scss";
 import { useState } from 'react';
 import NextImage from "next/image";
+import { useRouter } from "next/router";
 
 
 const  HomePage = () => {
-
+    const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
     const [imageDimensions, setImageDimensions] = useState(null);
 
@@ -32,7 +33,17 @@ const  HomePage = () => {
         formData.append("file", selectedFile);
 
 
-        //API
+        //API to send image to Image classification Model 
+
+        router.push({
+            pathname: "/resultPage"
+            // send name retrive from Model to next page for querying data
+            // query: {
+            //    BirdName: birdName
+            // }
+        });
+
+
       };
     const handleRemoveImage = () => {
         setSelectedFile(null);

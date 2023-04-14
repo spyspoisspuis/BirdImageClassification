@@ -1,0 +1,44 @@
+@import '../../styles/global.scss';
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.container {
+    display :flex;
+    justify-content: center;
+    align-items: center;
+
+    .white_box {
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        .top_left {
+            @apply absolute top-0 left-0;
+            margin-top : 20px;
+            margin-left : 20px;
+            cursor: pointer;
+        }
+        .header {
+            color: black;
+            font-size: 40px;
+            font-family: Inter;
+            font-weight: 900px;
+            line-height: 61px;
+        }
+        .txt {
+
+        }
+
+        
+    }
+
+}
+
+.left_bottom {
+    @apply absolute bottom-0 left-0;
+}
+.right_bottom {
+    @apply absolute bottom-0 right-0;
+}
