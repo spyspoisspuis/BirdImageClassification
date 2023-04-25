@@ -4,7 +4,6 @@
 
 
 
-
 .container {
     display :flex;
     justify-content: center;
@@ -25,6 +24,62 @@
             font-family: Inter;
             font-weight: 900px;
             line-height: 61px;
+        }
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+            gap:40px;
+            .loading {
+                font-size: 50px;
+                font-family: Inter;
+                font-weight: 900px;
+                line-height: 61px;
+                // color: #0af;
+                background: linear-gradient(180deg, #20C483 0%, #01A364 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+          
+            .circle {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 5px solid#20C483;
+                position: relative;
+                animation: fill 2s linear infinite;
+              }
+              
+              .circle::before {
+                content: "";
+                display: block;
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                width: 110%;
+                height: 110%;
+                border-radius: 50%;
+                border: 5px solid  #01A364;
+                opacity: 0;
+                animation: fill 2s linear infinite;
+              }
+              
+              @keyframes fill {
+                0% {
+                  transform: scale(1);
+                  opacity: 0;
+                }
+                50% {
+                  transform: scale(1.1);
+                  opacity: 1;
+                }
+                100% {
+                  transform: scale(1);
+                  opacity: 0;
+                }
+              }
+              
         }
 
         .upload_area {
