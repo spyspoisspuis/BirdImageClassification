@@ -5,11 +5,12 @@ import axios from 'axios';
 import { useRouter } from "next/router";
 
 
-const  ResultPage = (  ) =>  {
+const  Bird = (  ) =>  {
     const router = useRouter();
 
     const [imageData, setImageData] = useState('');
-    const [birdName, setBirdName] = useState(router.query['Bird_Name']);
+    // const [birdName, setBirdName] = useState(router.query.birdName);
+    let birdName = router.query.birdName;
     let displayBirdName = birdName;
     if (displayBirdName == "LOONEY BIRDS") {
         displayBirdName = "This is not a bird";
@@ -18,15 +19,14 @@ const  ResultPage = (  ) =>  {
     
 
     async function getImageData() {
+        
         let image_url = process.env.NEXT_PUBLIC_BIRD_BACKEND+`/download/${birdName}.jpg`;
-
         const response = await axios.get(image_url, { responseType: 'arraybuffer' });
         const imageData = Buffer.from(response.data, 'binary').toString('base64');
         return imageData;
     }
     async function getBirdDetail() {
-        if (birdName === "This is not a bird" ) {
-            console.log("not a bird");
+        if (displayBirdName === "This is not a bird" ) {
             return;
         }
         let url = process.env.NEXT_PUBLIC_BIRD_BACKEND+`/get-bird-data?key=${birdName}`;
@@ -77,7 +77,7 @@ const  ResultPage = (  ) =>  {
 
 
   
-export default ResultPage;
+export default Bird;
 
 
                         
