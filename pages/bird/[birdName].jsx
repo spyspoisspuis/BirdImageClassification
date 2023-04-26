@@ -5,29 +5,34 @@ import axios from 'axios';
 import { useRouter } from "next/router";
 
 
-const  ResultPage = (  ) =>  {
-
-    const [imageData, setImageData] = useState('');
-    const [birdName, setBirdName] = useState('');
-    const [birdDescription, setBirdDescription] = useState('');
+const  Bird = (  ) =>  {
     const router = useRouter();
 
+    const [imageData, setImageData] = useState('');
+    // const [birdName, setBirdName] = useState(router.query.birdName);
+    let birdName = router.query.birdName;
+    let displayBirdName = birdName;
+    if (displayBirdName == "LOONEY BIRDS") {
+        displayBirdName = "This is not a bird";
+    }
+    const [birdDescription, setBirdDescription] = useState('');
     
 
     async function getImageData() {
-        let image_url = process.env.NEXT_PUBLIC_BIRD_BACKEND+`/download/baltic.png`;
-
+        
+        let image_url = process.env.NEXT_PUBLIC_BIRD_BACKEND+`/download/${birdName}.jpg`;
         const response = await axios.get(image_url, { responseType: 'arraybuffer' });
         const imageData = Buffer.from(response.data, 'binary').toString('base64');
         return imageData;
     }
     async function getBirdDetail() {
-        let url = process.env.NEXT_PUBLIC_BIRD_BACKEND+`/get-bird-data?key=Baltic`;
+        if (displayBirdName === "This is not a bird" ) {
+            return;
+        }
+        let url = process.env.NEXT_PUBLIC_BIRD_BACKEND+`/get-bird-data?key=${birdName}`;
         axios.get((url))
         .then(function (response) {
-            setBirdName(response.data.bird.name);
             setBirdDescription(response.data.bird.description)
-
         })
         .catch(function (error) {
             alert("Error",error.message)
@@ -59,21 +64,20 @@ const  ResultPage = (  ) =>  {
                     <NextImage className={style.top_left} src="/images/back.png" alt="" width={81} height={81} onClick={handleBack} />
                     <NextImage  src={`data:image/png;base64,${imageData}`} alt="" width={250} height={250}/>
                     <h1 className={`${style.header} text-5xl font-bold mb-4 text-center`}>
-                        {birdName}
+                        {displayBirdName}
                     </h1>
                     <p className={`${style.txt} text-xl text-center mb-4 text-black`}>{birdDescription}</p>
-                    
                 </div>
-                <NextImage className={style.left_bottom} src="/images/left_bird.png" alt="" width={409} height={550}/>
-                <NextImage className={style.right_bottom} src="/images/right_bird.png" alt="" width={422} height={500}/>
             </div>
+            <NextImage className={style.left_bottom} src="/images/left_bird.png" alt="" width={409} height={550}/>
+            <NextImage className={style.right_bottom} src="/images/right_bird.png" alt="" width={422} height={500}/>
         </div>
     );
 }
 
 
   
-export default ResultPage;
+export default Bird;
 
 
                         
