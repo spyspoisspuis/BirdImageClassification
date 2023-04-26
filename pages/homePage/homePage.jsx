@@ -3,7 +3,6 @@ import { useState } from 'react';
 import NextImage from "next/image";
 import { useRouter } from "next/router";
 import axios from 'axios';
-import mime from 'mime';
 
 const  HomePage = () => {
     const router = useRouter();
@@ -25,7 +24,7 @@ const  HomePage = () => {
         overflow: 'hidden',
     } : {
         border: 'dashed 2px #CBD5E0',
-        padding: '5rem 15rem',
+        padding: '2rem 15rem',
         borderRadius: '60px',
         width: '2/3',
         height: '2/3',
@@ -42,7 +41,6 @@ const  HomePage = () => {
           img.src = reader.result;
           img.onload = () => {
             const { naturalWidth, naturalHeight } = img;
-            console.log(naturalWidth, naturalHeight);
             setImageDimensions({ width: naturalWidth, height: naturalHeight });
           };
         }; 
@@ -63,14 +61,10 @@ const  HomePage = () => {
           };
           setLoading(true);
           axios.post(url, formData, config).then((response) => {
-            console.log(response);
             let bird_name = response.data
-            console.log("Name "+bird_name);
+            let path = "/bird/"+bird_name
             router.push({
-                pathname: "/resultPage",
-                query: {
-                   Bird_Name: bird_name
-                }
+                pathname: path,
             });
 
           }).catch((error) => {
@@ -78,7 +72,6 @@ const  HomePage = () => {
             setLoading(false);
 
           });
-
       };
 
 
